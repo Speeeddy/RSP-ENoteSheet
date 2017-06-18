@@ -40,14 +40,6 @@
         </SelectParameters>
     </asp:SqlDataSource>
     <br />
-    <asp:DropDownList ID="DDLPlNo" runat="server" visible="False" DataSourceID="SqlDataSource1"></asp:DropDownList>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [PlNo] FROM [EmployeeNoteSheet] WHERE (([Dept_Code] = @Dept_Code) AND ([EmpName] = @EmpName))">
-        <SelectParameters>
-            <asp:ControlParameter ControlID="DropDownList_DeptName" Name="Dept_Code" PropertyName="SelectedValue" Type="String" />
-            <asp:ControlParameter ControlID="DropDownList_EmpName" Name="EmpName" PropertyName="SelectedValue" Type="String" />
-        </SelectParameters>
-    </asp:SqlDataSource>
-    <!--This is just to get PlNo more easily.-->
     <asp:TextBox ID="TextBoxSubject" runat="server" MaxLength="1000" ToolTip="Enter the subject of the note sheet here." Width="500px" TextMode="MultiLine"></asp:TextBox>
     <br />
     <asp:FileUpload ID="FileUploadAttachment" runat="server" Width="500px" ToolTip="Attach files (optional). If multiple files, make sure that they are in the same folder before attaching." />
