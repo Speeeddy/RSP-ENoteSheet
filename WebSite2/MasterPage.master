@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+﻿<%@ Master Language="C#" AutoEventWireup="false" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
 
 <!DOCTYPE html>
 
@@ -16,8 +16,7 @@
 <body>
     <form id="form1" runat="server">
      
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [NoteID] FROM [AttachmentNoteSheet]"></asp:SqlDataSource>
-    <style>
+       <style>
         .menuclass {
             /* To limit the menu width to the content of the menu: */
             display: inline-block;
