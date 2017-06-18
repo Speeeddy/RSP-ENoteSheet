@@ -91,60 +91,28 @@ public partial class _Default : System.Web.UI.Page
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
                     string sub = TextBoxSubject.Text;
-                    string plno;// = DDLPlNo.SelectedValue;
-
-
-                    cmd.CommandText = "SELECT PlNo FROM EmployeeNoteSheet WHERE ((EmpName = @empname) AND (Dept_Code = @dept_cd))";
-                    string empname = DropDownList_EmpName.SelectedValue;                 
-                    cmd.Parameters.AddWithValue("@empname", empname);
+                    string plno = DDLPlNo.SelectedValue;
                     string dept_cd = DropDownList_DeptName.SelectedValue;
-                    cmd.Parameters.AddWithValue("@dept_cd", dept_cd);
-                    plno = cmd.ExecuteScalar().ToString();
-
                     //this is plno of receiver. plno (CurrentP) of originator to be given by login id.
                     //originator is a required field but being set null-able and default 0 for now
-
-                    cmd.CommandText = "DECLARE @T TABLE (ID INTEGER); INSERT INTO MainNoteSheetTable(SubjectNS, CurrentP, Dept_Cd) OUTPUT INSERTED.NoteID INTO @T VALUES (@sub,@plno,@dept_cd); SELECT * FROM @T";
+                    cmd.CommandText = "INSERT INTO MainNoteSheetTable (SubjectNS, CurrentP, Dept_Cd) values (@sub,@plno,@dept_cd)";
                     cmd.Parameters.AddWithValue("@sub", sub);
                     cmd.Parameters.AddWithValue("@plno", plno);
+                    cmd.Parameters.AddWithValue("@dept_cd", dept_cd);
 
-                    int NoteID=0;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    Response.Write(rowsAffected.ToString());
+ /*                   if (rowsAffected == 1)
                     {
-                        if (reader.HasRows)
-                        {
-                            reader.Read();
-                            NoteID = Convert.ToInt32(reader.GetInt32(0));
-                        }
+                        Response.Write(rowsAffected.ToString())
+                        //Success notification
                     }
-                
-                    cmd.Parameters.AddWithValue("@NoteID", NoteID);
-
-                    cmd.CommandText = "UPDATE DataNoteSheet SET DataNote = @data, DataLen = @datalen WHERE NoteID = @NoteID";
-                    string data = TextBoxNoteSheet.Text;
-                    int datalen = data.Length;
-                    cmd.Parameters.AddWithValue("@data", data);
-                    cmd.Parameters.AddWithValue("@datalen", datalen);
-
-                    int rowsAffectedUpdateData = cmd.ExecuteNonQuery();
-
-                    cmd.CommandText = "UPDATE CommentNoteSheet SET LocalReceiver = @lreceiver WHERE NoteID = @NoteID";
-                    cmd.Parameters.AddWithValue("@lreceiver", plno);
-                    
-                    int rowsAffectedUpdateComment = cmd.ExecuteNonQuery();
-
-                    //Response.Write(rowsAffected.ToString());
-                    /*                   if (rowsAffected == 1)
-                                       {
-                                           Response.Write(rowsAffected.ToString())
-                                           //Success notification
-                                       }
-                                       else
-                                       {
-                                           //Error notification
-                                       }
-                      */
-                }
+                    else
+                    {
+                        //Error notification
+                    }
+   */           }
                 LabelError.Text = "Success!";
                 LabelError.ForeColor = System.Drawing.Color.Green;
                 LabelError.Visible = true;
@@ -171,5 +139,5 @@ public partial class _Default : System.Web.UI.Page
         }
 
     }
-
+    
 }
